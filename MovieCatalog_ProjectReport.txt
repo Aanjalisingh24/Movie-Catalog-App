@@ -1,0 +1,134 @@
+============================================================
+PROJECT REPORT - MOVIE CATALOG APP
+============================================================
+
+OVERVIEW:
+---------
+This project is a full-stack Movie Catalog App designed to allow users to sign up, log in, and explore a list of movies.
+Authenticated users can search, filter, and mark movies as favorites based on genre, rating, or year.
+
+PROJECT PLANNING:
+-----------------
+Before starting development, I outlined the key features:
+- User authentication (signup/login)
+- Displaying a movie list with search and filter
+- Marking favorite movies
+- Secure route protection
+
+I divided the project into Frontend, Backend, and Database phases and made a checklist for each.
+
+TECHNOLOGY STACK & DESIGN REASONING:
+-------------------------------------
+
+Frontend:
+
+- **React.js**  
+  Chosen for its component-based architecture and fast re-rendering capabilities, React made it easy to break the UI into reusable modules like `MovieCard` and `ProtectedRoute`.
+
+- **Vite**  
+  Used as the build tool instead of Create React App because of its significantly faster startup, hot module reloading, and simpler configuration.
+
+- **Tailwind CSS**  
+  Selected for its utility-first approach, Tailwind helped build a clean, responsive, and mobile-friendly UI quickly without writing custom CSS.
+
+- **Bootstrap (for Cards)**  
+  Bootstrap’s card components were used to ensure a consistent, polished layout for movie items with minimal effort, complementing Tailwind's utility classes.
+
+- **React Router**  
+  Used for handling page navigation between Login, Signup, and Home, ensuring a seamless single-page app experience.
+
+- **Axios**  
+  Preferred over fetch due to its clean syntax, automatic JSON parsing, and better error handling, which made API communication more robust.
+
+Backend:
+
+- **Node.js with Express.js**  
+  Chosen for its lightweight and performant nature. Express provides a clean routing mechanism, and Node.js allows using JavaScript across the full stack.
+
+- **MySQL**  
+  Used as the primary database due to its relational nature, which is ideal for structured data like users and their favorite movies.
+
+- **JWT (JSON Web Tokens)**  
+  Implemented secure authentication using stateless tokens, simplifying session management across frontend and backend.
+
+- **HTTP-only Cookies**  
+  JWTs are stored in HTTP-only cookies to prevent XSS attacks and ensure tokens are auto-sent securely with each request.
+
+- **Joi**  
+  Integrated for validating input (e.g., registration credentials). Joi ensures data consistency and guards against malformed or malicious input on both client and server.
+
+- **dotenv**  
+  Used to manage sensitive configuration like DB credentials and JWT secrets, keeping secrets outside the main codebase.
+
+SPECIAL FEATURES & DESIGN CHOICES:
+----------------------------------
+- **Fallback for Broken Poster Images**  
+  Some movie entries in the dataset had broken or missing image URLs. A default image (`no-image-logo.jpg`) is shown in such cases to maintain UI consistency.
+
+- **Secure Authentication**  
+  JWT tokens stored in HTTP-only cookies help prevent XSS attacks and session hijacking. The `ProtectedRoute.jsx` ensures only logged-in users can access the Movie Catalog.
+
+- **Robust Input Validation**  
+  All user inputs are validated with Joi both on the frontend and backend to ensure clean, secure data flow.
+
+INSTRUCTIONS TO RUN THE PROJECT:
+---------------------------------
+
+1. **Extracting the Project**
+   - Download the ZIP file and extract it using any ZIP tool (WinRAR, 7-Zip, etc.).
+   - Inside, you’ll find:
+     - `server/` – Node.js + Express backend
+     - `src/` – React frontend
+
+   *Note: The project includes `node_modules` and `.env` files, so no additional setup is required.*
+
+2. **Prerequisites**
+   Ensure you have the following installed:
+   - Node.js (v20+)
+   - PHPMyAdmin (for MySQL DB access)
+
+3. **Importing the Database**
+   - Open phpMyAdmin.
+   - Create a new database named `movie_catalog`.
+   - Click the **Import** tab.
+   - Choose the file `movie_catalog.sql` from the ZIP folder.
+   - Click **Go**.
+
+   This will create all necessary tables and insert sample movie data.
+
+4. **Running the Backend**
+   - Open a terminal.
+   - Navigate to the `server/` directory.
+   - Run: `npm start`
+   - The backend will run on `http://localhost:3005`
+
+5. **Running the Frontend**
+   - Open another terminal.
+   - Navigate to the `src/` directory.
+   - Run: `npm start`
+   - The frontend will run on `http://localhost:5173` (or the port Vite chooses).
+
+6. **Accessing the App**
+   - Open `http://localhost:5173` in your browser.
+   - You can now sign up, log in, browse movies, and add favorites.
+
+
+POSSIBLE IMPROVEMENTS (IF GIVEN MORE TIME):
+--------------------------------------------
+
+1. Double-Click to Favorite
+Currently, users can mark a movie as a favorite by clicking the heart icon.  
+As a UX enhancement, I would implement a feature where *double-clicking* on the movie poster image also adds it to the favorites list — similar to the behavior seen in platforms like Instagram.
+
+2. Password Reset via Email Verification
+To improve account security and usability, I would add a “Forgot Password” functionality.  
+This would allow users to reset their password via a secure link sent to their registered email address, ensuring only verified users can regain access.
+
+
+PERSONAL TAKEAWAYS:
+-------------------
+This project helped me:
+- Implement secure authentication using JWT and cookies.
+- Work confidently with MySQL and REST APIs.
+- Design responsive UIs using Tailwind and Bootstrap.
+- Understand modular full-stack architecture and handle real-world scenarios like authentication, protected routes, and data validation.
