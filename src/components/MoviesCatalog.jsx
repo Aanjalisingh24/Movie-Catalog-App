@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import axios from 'axios';
 import Select from 'react-select';
+import API_BASE_URL from "../api";
 
 const safeLower = (v = '') => (typeof v === 'string' ? v.toLowerCase() : '');
 const toNumber = (v) => (Number.isFinite(+v) ? +v : NaN);
@@ -38,7 +39,7 @@ const MoviesCatalog = () => {
   const [isFavoritesView, setIsFavoritesView] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:3005/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/me`, { withCredentials: true })
       .then((res) => {
         if (res.data.loggedIn) {
           setUserId(res.data.user.id);
@@ -84,7 +85,7 @@ const MoviesCatalog = () => {
     const fetchFavorites = async () => {
       if (!userId) return;
       try {
-        const res = await fetch(`http://localhost:3005/favorites/${userId}`, {
+        const res = await fetch(`${API_BASE_URL}/favorites/${userId}`, {
           credentials: 'include',
         });
         const data = await res.json();
@@ -102,7 +103,7 @@ const MoviesCatalog = () => {
       alert("Please log in to save favorites.");
       return;
     }
-    const res = await fetch('http://localhost:3005/favorites', {
+    const res = await fetch(`${API_BASE_URL}/favorites`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -120,7 +121,7 @@ const MoviesCatalog = () => {
   };
 
   const handleLogout = () => {
-    fetch('http://localhost:3005/logout', {
+    fetch(`${API_BASE_URL}/logout`, {
       method: 'POST',
       credentials: 'include',
     }).then(() => {

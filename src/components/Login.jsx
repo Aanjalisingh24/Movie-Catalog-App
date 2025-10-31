@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import API_BASE_URL from "../api";
 
 const Login = () => {
   const [showPswrd, setShowPswrd] = useState(false);
@@ -26,7 +27,7 @@ const Login = () => {
   const LoginHandler = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3005/login', loginData, {
+      const response = await axios.post(`${API_BASE_URL}/login`, loginData, {
         withCredentials: true, 
       });
       const {success, message } = response.data;

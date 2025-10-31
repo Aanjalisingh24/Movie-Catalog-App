@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import API_BASE_URL from "../api";
 
 const Signup = () => {
   const [showPswrd, setShowPswrd] = useState(false);
@@ -34,7 +35,7 @@ const Signup = () => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:3005/signup',
+        `${API_BASE_URL}/signup`,
         signupData,
       ); 
       console.log(response);
