@@ -30,4 +30,18 @@ const db = mysql.createPool({
   }
 })();
 
+db.query(`
+  CREATE TABLE IF NOT EXISTS favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(255),
+    release_year VARCHAR(10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`)
+.then(() => console.log("Favorites table ready!"))
+.catch((err) => console.error("Error creating favorites table:", err));
+
+
 module.exports = db;
