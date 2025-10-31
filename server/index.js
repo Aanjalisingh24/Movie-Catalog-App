@@ -26,7 +26,7 @@ async function testDBConnection() {
   }
 }
 
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.MYSQLPORT || 3005;
 
 app.listen(PORT, "0.0.0.0", async () => {
   console.log(`Server running on port ${PORT}`);
