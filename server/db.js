@@ -4,9 +4,13 @@ require('dotenv').config();
 const db = mysql.createPool({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
-  password: process.env.MYSQL_ROOT_PASSWORD,
+  password: process.env.MYSQLPASSWORD, 
   database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT || 3306,  // ✅ add this line
+  port: process.env.MYSQLPORT || 3306,
 });
+
+db.getConnection()
+  .then(() => console.log("MySQL Connected Successfully"))
+  .catch((err) => console.error("Database Connection Error:", err.message));
 
 module.exports = db;
