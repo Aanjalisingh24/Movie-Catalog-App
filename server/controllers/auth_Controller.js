@@ -77,12 +77,12 @@ const Login = async (req, res) => {
       { expiresIn: '1h' } 
     );
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'Strict',
-      maxAge: 3600000, 
-    });
+   res.cookie('token', token, {
+  httpOnly: true,
+  secure: true,        
+  sameSite: 'None',     
+  maxAge: 3600000,     
+});
 
     return res.status(200).json({
       success: true,
