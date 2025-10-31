@@ -26,9 +26,10 @@ async function testDBConnection() {
   }
 }
 
-app.listen(3005, async () => {
-  console.log('Server running on http://localhost:3005');
+const PORT = process.env.PORT || 3005;
+
+app.listen(PORT, "0.0.0.0", async () => {
+  console.log(`Server running on port ${PORT}`);
   await testDBConnection();
 });
-
 
