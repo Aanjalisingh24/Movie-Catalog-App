@@ -3,6 +3,8 @@ const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies.token;
+  console.log('Cookie token:', token ? 'exists' : 'missing');
+  
   if (!token) {
     return res.status(401).json({ message: 'Access denied. Token missing.' });
   }
@@ -11,8 +13,10 @@ const verifyToken = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
+    console.error('Invalid token:', err.message);
     return res.status(403).json({ message: 'Invalid token' });
   }
 };
+
 
 module.exports = verifyToken;

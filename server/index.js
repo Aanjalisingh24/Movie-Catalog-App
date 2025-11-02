@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json());
 app.use('/', router);
 
-async function testDBConnection() {
+async function testDBConnection() { 
   try {
     const connection = await db.getConnection();
     console.log(' Connected to MySQL database');

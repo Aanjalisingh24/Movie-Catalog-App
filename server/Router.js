@@ -61,8 +61,12 @@ router.post('/favorites', verifyToken, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.json({ success: true, message: 'Logged out' });
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+  });
+  res.json({ success: true, message: 'Logged out successfully' });
 });
 
 module.exports = router;
