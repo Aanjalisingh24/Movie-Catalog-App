@@ -1,6 +1,6 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-const { findUserByEmail, createUser } = require('../models/userModel');
+const User = require('../models/userModel');
 const {
   registrationModelValidation,
   loginModelValidation,
@@ -12,32 +12,35 @@ const SECRET_KEY = process.env.JWT_SECRET;
 const Signup = async (req, res) => {
   const { email, password } = req.body;
   const normalizedEmail = email.toLowerCase().trim();
-  const { error } = registrationModelValidation(req.body);
+  // const { error } = registrationModelValidation(req.body);
+  // console.log("REQ BODY:", req.body);
 
-  if (error) {
-    return res.status(400).json({ success: false, error: error.details[0].message });
-  }
+  // if (error) {
+  //   return res.status(400).json({ success: false, error: error.details[0].message });
+  // }
   
   try {
-    const user = await findUserByEmail(normalizedEmail);
-    console.log('User found:', user);
+    const existingUser = await User.findOne({email: normalizedEmail});
+    console.log('User found:', existingUser);
 
-    if (user) {
+    if (existingUser) {
       console.log('Email already registered');
       return res.status(400).json({ success: false, message: 'Email already registered' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await createUser(normalizedEmail, hashedPassword);
+    const user = await User({
+      email: normalizedEmail , 
+      password: hashedPassword});
+    await user.save();
 
-    const newUser = await findUserByEmail(normalizedEmail);
 
     return res.status(201).json({
       success: true,
       message: 'User created successfully. Please login now.',
       user: {
-        id: newUser.id,
-        email: newUser.email,
+        id: user.id,
+        email: user.email,
       },
     });
 
@@ -59,7 +62,7 @@ const Login = async (req, res) => {
   }
 
   try {
-    const user = await findUserByEmail( normalizedEmail);
+    const user = await User.findOne({email: normalizedEmail});
     if (!user) {
       console.warn('User not found');
       return res.status(401).json({ success: false, message: 'User not found' });
